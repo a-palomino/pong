@@ -1,0 +1,57 @@
+body{
+    background-color: rgb(85, 65, 65);
+}
+
+#canvas{
+    height: 100px;
+    width: 400px;
+    border:1px solid #000000;
+}
+
+rect{
+    fill:rgb(255, 0, 0);
+    stroke-width:10;
+    stroke:rgb(0,0,0);
+}
+
+#jugador{
+    position: absolute;
+    
+}
+
+#ia{
+    position: absolute;
+    
+}
+
+#pelota{
+    position: absolute;
+}
+
+h1{
+    position: absolute;
+    text-decoration: rgb(255, 255, 255);
+    font-size:300px;
+    opacity: 1;
+}
+
+#puntosJugador{
+    left: 300px;
+    top: -40px;
+}
+
+#puntosIA{
+    left: 900px;
+    top: -40px;
+}
+
+#linea{
+    position: absolute;
+    left: 650;
+}
+
+line{
+    stroke:rgb(255, 255, 255);
+    stroke-width:2;
+    
+}

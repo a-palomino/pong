@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/b614cfd257.js" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+  <!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+    <!--PUNTUACIONES Y DECORACIÓN-->
+
+    <h1 id="puntosJugador">0</h1>
+    <h1 id="puntosIA">0</h1>
+
+    <svg id="linea" height="645" width="10" style="left:650;">
+        <line x1="0" y1="0" x2="0" y2="645"  />
+        Sorry, your browser does not support inline SVG.
+      </svg>
+
+
+
+    <!--JUGADOR,IA Y PELOTA-->
+    <svg id='pelota' width="50" height="50" style="left:625;top:15" bajar="true">
+        <circle cx="25" cy="25" r="20" stroke="green" stroke-width="4" fill="yellow" />
+    </svg>
+
+
+    <svg id="jugador" width="20" height="150" style="left:20;top:200"><rect width="20" height="150"></rect></svg>
+
+    <svg id="ia" width="20" height="150" style="left:1300;top:200"><rect width="20" height="150"></rect></svg>
+
+
+
+    
+</body>
+</html>
