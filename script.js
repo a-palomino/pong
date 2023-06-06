@@ -1,6 +1,7 @@
 let posInicialPelota = [100,15];//X,Y
 let velocidadPelota = [8,8]; //X,Y
 let puntuaciones = [0,0];
+let pausa = false;
 $(document).ready(function(){
     let jugador = document.getElementById('jugador');
     let ia = document.getElementById('ia');
@@ -11,39 +12,60 @@ $(document).ready(function(){
     $(document.body).on('keydown',function(e){
         //Dibujo controlable
         let jugador = document.getElementById('jugador');
+
+        if(e.key == 'Escape'){
+            pausa = pausa == true ? false : true;
+        }
         
         //Flecha derecha
-        if(e.key == 'ArrowUp'){
+        if(!pausa){
+            if(e.key == 'ArrowUp'){
             
-            //Comprobamos que no se salga de los margenes de la derecha
-            if(jugador.style.top && parseInt(jugador.style.top ) >= 10){
-                jugador.style.top = parseInt(jugador.style.top) - 20 ;
-            }
-        }else if(e.key == 'ArrowDown'){
-            
-            //Comprobamos que no se salga de los margenes de la izquierda
-            if(jugador.style.top && parseInt(jugador.style.top ) <= 500){
-                jugador.style.top = parseInt(jugador.style.top) + 20 ;
+                //Comprobamos que no se salga de los margenes de la derecha
+                if(jugador.style.top && parseInt(jugador.style.top ) >= 10){
+                    jugador.style.top = parseInt(jugador.style.top) - 20 ;
+                }
+            }else if(e.key == 'ArrowDown'){
+                
+                //Comprobamos que no se salga de los margenes de la izquierda
+                if(jugador.style.top && parseInt(jugador.style.top ) <= 500){
+                    jugador.style.top = parseInt(jugador.style.top) + 20 ;
+                }
             }
         }
+
+
+        
     });
 
     
-    //Movimiento constante de la pelota
-    setInterval(function(){
-        //moverPelota(pelota);
-        movimientoIA(ia,pelota);
-    },16);
 
-    //Detección de colisiones
     setInterval(function(){
-        
-        isCollidingParedes();
-        isCollidingTecho();
-        isCollidingPlayer(jugador);
-        isCollidingIA(ia);
-    }, 16);
+        if(!pausa){
+            controlJuego();
+        }
+    },16);
+    
+    
 });
+
+/**
+ * Se encarga de 
+ */
+function controlJuego(){
+
+
+    moverPelota(pelota);
+    movimientoIA(ia,pelota);
+    //Colisiones
+    isCollidingParedes();
+    isCollidingTecho();
+    isCollidingPlayer(jugador);
+    isCollidingIA(ia);
+
+    
+    
+}
 
 function reiniciarJuego(){
     let pelota = document.getElementById('pelota');
