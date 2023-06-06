@@ -4,41 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://kit.fontawesome.com/b614cfd257.js" crossorigin="anonymous"></script>
+    <title>Menú Principal</title>
 
-	<link rel="stylesheet" type="text/css" href="style.css">
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
-  <!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
-	<script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="menu.css">
 </head>
 <body>
-    <!--PUNTUACIONES Y DECORACIÓN-->
+    <!--Encabezado-->
+    <div class="container titulo">
+        <h1 class="text-center">A simple PONG game</h1>
+    </div>
 
-    <h1 id="puntosJugador">0</h1>
-    <h1 id="puntosIA">0</h1>
-
-    <svg id="linea" height="645" width="10" style="left:650;">
-        <line x1="0" y1="0" x2="0" y2="645"  stroke-dasharray="10";/>
-        Sorry, your browser does not support inline SVG.
-      </svg>
-
-
-
-    <!--JUGADOR,IA Y PELOTA-->
-    <svg id='pelota' width="50" height="50" style="left:625;top:15" bajar="true">
-        <circle cx="25" cy="25" r="20" stroke="green" stroke-width="4" fill="yellow" />
-    </svg>
-
-
-    <svg id="jugador" width="20" height="150" style="left:20;top:200"><rect width="20" height="150"></rect></svg>
-
-    <svg id="ia" width="20" height="150" style="left:1300;top:200"><rect width="20" height="150"></rect></svg>
-
-
-
-    
+    <!--Menú selección-->
+    <div class="container seleccion">
+        <div class="row">
+            <div class="col col-md-9 opcion">
+                <a href="pong.html"><button class="opcionIA" onclick="eleccionModo(false)">JUGADOR VS IA</button></a>
+            </div>
+            <div class="col col-md-9 opcion">
+                <!--<button >Jugador VS jugador2</button>-->
+                <a href="pong.html"><button class="opcionJ2" onclick="eleccionModo(true)">JUGADOR VS JUGADOR2</button></a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
+<script>
+    function eleccionModo(valor){
+        sessionStorage.setItem('segundoJugador',valor);
+    }
+</script>

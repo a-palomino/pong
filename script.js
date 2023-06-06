@@ -2,16 +2,19 @@ let posInicialPelota = [100,15];//X,Y
 let velocidadPelota = [8,8]; //X,Y
 let puntuaciones = [0,0];
 let pausa = false;
+let segundoJugador = false;
 $(document).ready(function(){
     let jugador = document.getElementById('jugador');
     let ia = document.getElementById('ia');
     let pelota = document.getElementById('pelota');
+    segundoJugador = sessionStorage.getItem('segundoJugador');
     
 
 
     $(document.body).on('keydown',function(e){
         //Dibujo controlable
         let jugador = document.getElementById('jugador');
+        let jugador2 = document.getElementById('ia');
 
         if(e.key == 'Escape'){
             pausa = pausa == true ? false : true;
@@ -32,6 +35,23 @@ $(document).ready(function(){
                     jugador.style.top = parseInt(jugador.style.top) + 20 ;
                 }
             }
+
+            //Controles jugador 2 
+            if(segundoJugador == 'true'){
+                if(e.key == '8'){
+            
+                    //Comprobamos que no se salga de los margenes de la derecha
+                    if(jugador2.style.top && parseInt(jugador2.style.top ) >= 10){
+                        jugador2.style.top = parseInt(jugador2.style.top) - 20 ;
+                    }
+                }else if(e.key == '2'){
+                    
+                    //Comprobamos que no se salga de los margenes de la izquierda
+                    if(jugador2.style.top && parseInt(jugador2.style.top ) <= 500){
+                        jugador2.style.top = parseInt(jugador2.style.top) + 20 ;
+                    }
+                }
+            }
         }
 
 
@@ -42,7 +62,7 @@ $(document).ready(function(){
 
     setInterval(function(){
         if(!pausa){
-            controlJuego();
+            controlJuego(ia,pelota,jugador);
         }
     },16);
     
@@ -52,11 +72,13 @@ $(document).ready(function(){
 /**
  * Se encarga de 
  */
-function controlJuego(){
+function controlJuego(ia,pelota,jugador){
 
 
     moverPelota(pelota);
-    movimientoIA(ia,pelota);
+    if(segundoJugador == 'false'){
+        movimientoIA(ia,pelota);
+    }
     //Colisiones
     isCollidingParedes();
     isCollidingTecho();
