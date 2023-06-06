@@ -10,6 +10,11 @@ $(document).ready(function(){
     segundoJugador = sessionStorage.getItem('segundoJugador');
     
 
+    $('#continuar').on('click',function(){
+        pausa = false;
+        pausarPartida();
+    });
+
 
     $(document.body).on('keydown',function(e){
         //Dibujo controlable
@@ -18,6 +23,7 @@ $(document).ready(function(){
 
         if(e.key == 'Escape'){
             pausa = pausa == true ? false : true;
+            pausarPartida();
         }
         
         //Flecha derecha
@@ -68,6 +74,29 @@ $(document).ready(function(){
     
     
 });
+
+function pausarPartida(){
+
+    let juegoDiv = document.getElementById('juego');
+    let menuPausa = document.getElementById('menuPausa');
+
+    //Botones
+    let botonContinuar = document.getElementById('continuar');
+    let botonVolver = document.getElementById('volver');
+    
+
+    if(pausa){
+        juegoDiv.style.opacity = 0.2;
+        menuPausa.style.opacity = 1;
+        botonContinuar.removeAttribute('disabled');
+        botonVolver.removeAttribute('disabled');
+    }else{
+        juegoDiv.style.opacity = 1;
+        menuPausa.style.opacity = 0;
+        botonContinuar.setAttribute('disabled');
+        botonVolver.setAttribute('disabled');
+    }
+}
 
 /**
  * Se encarga de 
