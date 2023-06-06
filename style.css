@@ -30,6 +30,7 @@ rect{
 
 h1{
     position: absolute;
+    
     color: white;
     font-size:300px;
     font-family: 'Times New Roman', Times, serif;
@@ -38,12 +39,12 @@ h1{
 
 #puntosJugador{
     left: 300px;
-    top: -40px;
+    top: 150px;
 }
 
 #puntosIA{
     left: 900px;
-    top: -40px;
+    top: 150px;
 }
 
 #linea{
@@ -67,7 +68,18 @@ line{
     background-color: rgba(216, 219, 219, 0.753);
     top:20%;
     left:33%;
-    opacity: 0;
+    display: none;
+}
+
+
+#menuFinPartida{
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    background-color: rgba(216, 219, 219, 0.753);
+    top:20%;
+    left:33%;
+    display: none;
 }
 
 button{

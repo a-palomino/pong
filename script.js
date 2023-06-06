@@ -87,11 +87,12 @@ function pausarPartida(){
 
     if(pausa){
         juegoDiv.style.opacity = 0.2;
-        menuPausa.style.opacity = 1;
+        menuPausa.style.display = 'inline';
         botonContinuar.removeAttribute('disabled');
         botonVolver.removeAttribute('disabled');
     }else{
         juegoDiv.style.opacity = 1;
+        menuPausa.style.display = 'none';
         menuPausa.style.opacity = 0;
         botonContinuar.setAttribute('disabled');
         botonVolver.setAttribute('disabled');
@@ -262,9 +263,32 @@ function actualizarPuntuaciones(jugador,ia){
     puntuaciones[0] += jugador;
     puntuaciones[1] += ia;
 
+    
     let textoPuntJugador = document.getElementById('puntosJugador');
     let textoPuntIA = document.getElementById('puntosIA');
 
     textoPuntJugador.innerHTML = puntuaciones[0];
     textoPuntIA.innerHTML = puntuaciones[1];
+
+    //Comprobamos si se acabó la partida
+    let texto = document.getElementById('textoResultado');
+    let menuFinPartida = document.getElementById('menuFinPartida');
+    let juegoDiv = document.getElementById('juego');
+    let botonVolver = document.getElementById('volverFin');
+
+    if(puntuaciones[0] == 5){
+        texto.innerHTML = 'HAS GANADO LA PARTIDA';
+        pausa = true;
+        menuFinPartida.style.display= 'inline';
+        juegoDiv.style.opacity = 0.2;
+        botonVolver.removeAttribute('disabled');
+    }else if(puntuaciones[1] == 5){
+        texto.innerHTML = 'HAS PERDIDO LA PARTIDA';
+        pausa = true;
+        menuFinPartida.style.display= 'inline';
+        juegoDiv.style.opacity = 0.2;
+        botonVolver.removeAttribute('disabled');
+    }
+
+    
 }
