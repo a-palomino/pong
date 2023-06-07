@@ -1,5 +1,5 @@
 # pong
-A Javascript Pong game
+A Javascript Pong game (Still Under Development)
 
 Para jugar utiliza los siguientes controles:
 
