@@ -1,5 +1,5 @@
 let posInicialPelota = [100,15];//X,Y
-let velocidadPelota = [8,8]; //X,Y
+let velocidadPelota = [5,5]; //X,Y
 let puntuaciones = [0,0];
 let pausa = false;
 let segundoJugador = false;
@@ -111,7 +111,7 @@ $(document).ready(function(){
                 if(movJugador2){
                     clearInterval(movJugador2);
                     movJugador2 = null;
-                }
+                }   
             }
         }
         
@@ -273,6 +273,38 @@ function margenErrorIA(){
     let random;
 
     switch(dificultadIA){
+        case 'facil': margenError = 7;
+            
+        break;
+
+        case 'normal': margenError = 5;
+        break;
+
+        case 'dificil' : margenError = 3;
+        break;
+
+        case 'infinito': margenError = 0; //La IA siempre golpeará la pelota
+        break;
+
+        case 'default' : margenError = 0;
+        break;
+    }
+
+    if(velocidadPelota[1] < 10){
+        if(velocidadPelota[1] > 0){
+            velocidad = velocidadPelota[1] ;
+        }else{
+            velocidad = velocidadPelota[1];
+        }
+    }else{
+        if(velocidadPelota[1] > 0){
+            velocidad = velocidadPelota[1] - margenError;
+        }else{
+            velocidad = velocidadPelota[1] + margenError;
+        }
+    }
+    //Sistema de margen error (No acaba de convencer)
+    /*switch(dificultadIA){
         case 'facil': random = Math.floor(Math.random() * (1 - 0 + 1)) + 0; //50% de probabilidad de reducir la velocidad
                       margenError = 4;
         break;
@@ -302,7 +334,7 @@ function margenErrorIA(){
         }
     }else{
         velocidad = velocidadPelota[1];
-    }
+    }*/
 
     return velocidad;
 }
@@ -329,7 +361,26 @@ function isCollidingPlayer(jugador){
         if(widthPelotaObj[0] >= widthJugador[0] && widthPelotaObj[0] <= widthJugador[1] ||
              widthPelotaObj[1] >= widthJugador[0] && widthPelotaObj[1] <= widthJugador[1])
              {
-            velocidadPelota[0] *= (-1);
+                velocidadPelota[0] *= (-1);
+
+                //Comprobamos si sigue llevando la inercia del saque
+                if(velocidadPelota[1] != (10) || velocidadPelota[1] != (-10)){
+                    //Comprobamos si es positivo o negativo para mantener el sentido
+                    if(velocidadPelota[0] < 0 ){
+                        velocidadPelota[0] = -10;
+                    }else{
+                        velocidadPelota[0] = 10;
+                    }
+    
+                    if(velocidadPelota[1] < 0 ){
+                        velocidadPelota[1] = -10;
+                    }else{
+                        velocidadPelota[1] = 10;
+                    }
+                   
+                 }
+            
+
             
         }
     }
@@ -358,6 +409,24 @@ function isCollidingIA(jugador){
              widthPelotaObj[1] >= widthJugador[0] && widthPelotaObj[1] <= widthJugador[1])
              {
             velocidadPelota[0] *= (-1);
+            //Comprobamos si sigue llevando la inercia del saque
+            if(velocidadPelota[1] != (10) || velocidadPelota[1] != (-10)){
+                //Comprobamos si es positivo o negativo para mantener el sentido
+                if(velocidadPelota[0] < 0 ){
+                    velocidadPelota[0] = -10;
+                }else{
+                    velocidadPelota[0] = 10;
+                }
+
+                //Comprobamos si es positivo o negativo para mantener el sentido
+                if(velocidadPelota[1] < 0 ){ 
+                    velocidadPelota[1] = -10;
+                }else{
+                    velocidadPelota[1] = 10;
+                }
+               
+             }
+            
             
         }
     }
