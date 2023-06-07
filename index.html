@@ -24,6 +24,19 @@
             <div class="col col-md-9 opcion">
                 <a href="pong.html"><button class="opcionIA" onclick="eleccionModo(false)">JUGADOR VS IA</button></a>
             </div>
+
+            <div class="col col-md-9">
+                <!--Seleccion Dificultad-->
+                <input type="range" class="form-range" min="0" max="3" id="selectorDificultad" value="1">
+
+                <ul>
+                    <li>Fácil</li>
+                    <li>Normal</li>
+                    <li>Difícil</li>
+                    <li>Infinito</li>
+                </ul>
+            </div>
+
             <div class="col col-md-9 opcion">
                 <!--<button >Jugador VS jugador2</button>-->
                 <a href="pong.html"><button class="opcionJ2" onclick="eleccionModo(true)">JUGADOR VS JUGADOR2</button></a>
@@ -36,5 +49,7 @@
 <script>
     function eleccionModo(valor){
         sessionStorage.setItem('segundoJugador',valor);
+        let dificultad = document.getElementById('selectorDificultad');
+        sessionStorage.setItem('dificultadIA',dificultad.value);
     }
 </script>

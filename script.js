@@ -3,12 +3,14 @@ let velocidadPelota = [8,8]; //X,Y
 let puntuaciones = [0,0];
 let pausa = false;
 let segundoJugador = false;
+let dificultadIA = 'normal';
 $(document).ready(function(){
     let jugador = document.getElementById('jugador');
     let ia = document.getElementById('ia');
     let pelota = document.getElementById('pelota');
     segundoJugador = sessionStorage.getItem('segundoJugador');
-    
+    let valorDificultad = sessionStorage.getItem('dificultadIA');
+    configurarDificultad(valorDificultad);
 
     $('#continuar').on('click',function(){
         pausa = false;
@@ -75,6 +77,30 @@ $(document).ready(function(){
     
 });
 
+/**
+ * A partir de la configuración anterior, configura los valores de dificultad de la IA
+ * @param {int} valorDificultad 
+ */
+function configurarDificultad(valorDificultad){
+    
+    switch(valorDificultad){
+        case '0': dificultadIA = 'facil';
+        break;
+        
+        case '1': dificultadIA = 'normal';
+        break;
+
+        case '2': dificultadIA = 'dificil';
+        break;
+
+        case '3': dificultadIA = 'infinito';
+        break;
+    }
+}
+
+/**
+ * Para el movimiento de la partida y habilita el menú de pausa
+ */
 function pausarPartida(){
 
     let juegoDiv = document.getElementById('juego');
@@ -100,7 +126,7 @@ function pausarPartida(){
 }
 
 /**
- * Se encarga de 
+ * Se encarga de que se ejecuten todas las acciones necesarias para que funcione el juego
  */
 function controlJuego(ia,pelota,jugador){
 
@@ -119,6 +145,9 @@ function controlJuego(ia,pelota,jugador){
     
 }
 
+/**
+ *Se coloca la pelota en la posición inicial y le da un sentido de movimiento aleatorio 
+ */
 function reiniciarJuego(){
     let pelota = document.getElementById('pelota');
     pelota.style.left = 625;
@@ -133,6 +162,11 @@ function reiniciarJuego(){
     
 }
 
+/**
+ * Calcula el movimiento de la IA en función de la pelota
+ * @param {DOM} ia 
+ * @param {DOM} pelota 
+ */
 function movimientoIA(ia,pelota){
     //posiciones
     let posX = pelota.style.left;
@@ -144,11 +178,58 @@ function movimientoIA(ia,pelota){
     //Establecemos limites
     if(posX >= 500 && velocidadPelota[0] > 0){ 
         if((parseInt(ia.style.top) + velocidadPelota[1]) >= 10 &&  (parseInt(ia.style.top) + velocidadPelota[1]) <= 500){
-            ia.style.top = parseInt(ia.style.top) + (velocidadPelota[1]-1);
+            //Crearemos margenes de error
+            let velocidadPala = margenErrorIA();
+            ia.style.top = parseInt(ia.style.top) + (velocidadPala);
         } 
     }
 }
 
+//Se encarga de ajustar el margen de error de la IA en función de la dificultad elegida
+function margenErrorIA(){
+    let velocidad = 0;
+    let margenError = 0;
+    let random;
+
+    switch(dificultadIA){
+        case 'facil': random = Math.floor(Math.random() * (1 - 0 + 1)) + 0; //50% de probabilidad de reducir la velocidad
+                      margenError = 4;
+        break;
+
+        case 'normal': random = Math.floor(Math.random() * (2 - 0 + 1)) + 0; //33% de probabilidad de reducir la velocidad
+                       margenError = 2;
+        break;
+
+        case 'dificil' : random = Math.floor(Math.random() * (3 - 0 + 1)) + 0; //25% de probabilidad de reducir la velocidad
+                         margenError = 1;
+        break;
+
+        case 'infinito': random = 0; //La IA siempre golpeará la pelota
+        break;
+
+        case 'default' : random = 0;
+        break;
+    }
+
+    //Comprobamos si el número random a acertado
+    if(random == 1){
+        //Comprobamos el sentido de la velocidad de la pelota
+        if(velocidadPelota[1] > 0){
+            velocidad = velocidadPelota[1] - margenError;
+        }else{
+            velocidad = velocidadPelota[1] + margenError;
+        }
+    }else{
+        velocidad = velocidadPelota[1];
+    }
+
+    return velocidad;
+}
+
+/**
+ * Calcula si la pelota está colisionando con el jugador1
+ * @param {DOM} jugador 
+ */
 function isCollidingPlayer(jugador){
     let widthJugador = widthPlayer(jugador);
     let pelota = document.getElementById('pelota');
@@ -173,6 +254,10 @@ function isCollidingPlayer(jugador){
     }
 }
 
+/**
+ * Calcula si la pelota está colisionando con la IA (o jugador2 dependiendo del modo de juego)
+ * @param {DOM} jugador 
+ */
 function isCollidingIA(jugador){
     let widthJugador = widthPlayer(jugador);
     let pelota = document.getElementById('pelota');
@@ -214,7 +299,7 @@ function isCollidingTecho(){
 }
 
 /**
- * Si colisiona con las paredes, cambiamos la dirección del eje x
+ * Si colisiona con las paredes, actualizamos las puntuaciones i reiniciamos la partida
  */
 function isCollidingParedes(){
     pelota = document.getElementById('pelota');
@@ -233,13 +318,18 @@ function isCollidingParedes(){
     }
 }
 
-//Calcula el rango posX que ocupa el jugador en ese momento
+//Calcula el rango posY que ocupa el jugador e IA
 function widthPlayer(jugador){
     let pos = jugador.style.top;
     let rango = [parseInt(pos),parseInt(pos)+150];
     return rango;
 }
 
+/**
+ * Calcula el alto de la pelota para calcular luego las colisiones
+ * @param {DOM} pelota 
+ * @returns 
+ */
 function widthPelota(pelota){
     let pos = pelota.style.top;
     let rango = [parseInt(pos),parseInt(pos)+50];
@@ -247,7 +337,10 @@ function widthPelota(pelota){
 }
 
 
-
+/**
+ * Da velocidad y movimiento a la pelota
+ * @param {DOM} pelota 
+ */
 function moverPelota(pelota){
     
     pelota.style.top = parseInt(pelota.style.top) + velocidadPelota[1];
@@ -255,7 +348,7 @@ function moverPelota(pelota){
 }
 
 /**
- * Actualiza las puntuaciones
+ * Actualiza las puntuaciones y comprueba si se ha terminado la partida
  * @param {int} jugador 
  * @param {int} ia 
  */
