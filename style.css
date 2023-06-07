@@ -62,21 +62,22 @@ line{
 
 
 #menuPausa{
-    width: 400px;
+    width: 600px;
     height: 400px;
     position: absolute;
-    background-color: rgba(216, 219, 219, 0.753);
+    /**background-color: rgba(216, 219, 219, 0.753);*/
+    background-image: linear-gradient(to bottom, rgba(255, 0, 55, 0.692), rgba(255, 6, 214, 0.699));
     top:20%;
-    left:33%;
+    left:25%;
     display: none;
 }
 
 
 #menuFinPartida{
-    width: 400px;
-    height: 300px;
+    width: 600px;
+    height: 400px;
     position: absolute;
-    background-color: rgba(216, 219, 219, 0.753);
+    background-image: linear-gradient(to bottom, rgba(255, 0, 55, 0.692), rgba(255, 6, 214, 0.699));
     top:20%;
     left:33%;
     display: none;
@@ -89,20 +90,33 @@ button{
     border-color:rgba(255, 250, 250, 0);
     font-family:'Courier New', Courier, monospace;
     font-size: 20px;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 button:hover{
     opacity: 0.9;
     border-color: black;
-    box-shadow: 5px 10px;
+    box-shadow: 5px 10px black;
 }
 
 .volver{
     background-color: rgb(255, 0, 0);
+    margin-left: 30%;
 }
 
 .continuar{
-    background-color: aqua;
+    background-color: rgb(0, 17, 255);
     margin-left: 15%;
+}
+
+.volverFin{
+    background-color: rgb(255, 0, 0);
+    margin-left: 20%;
+}
+
+
+.texto-pausa{
+    font-family:'Courier New', Courier, monospace;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
 }

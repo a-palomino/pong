@@ -4,6 +4,8 @@ let puntuaciones = [0,0];
 let pausa = false;
 let segundoJugador = false;
 let dificultadIA = 'normal';
+let movJugador = null;
+
 $(document).ready(function(){
     let jugador = document.getElementById('jugador');
     let ia = document.getElementById('ia');
@@ -11,7 +13,11 @@ $(document).ready(function(){
     segundoJugador = sessionStorage.getItem('segundoJugador');
     let valorDificultad = sessionStorage.getItem('dificultadIA');
     configurarDificultad(valorDificultad);
+    
 
+    //Texto dificultad
+    let textoDificultad = document.getElementById('textoDificultad');
+    textoDificultad.innerHTML += ' ' + dificultadIA;
     $('#continuar').on('click',function(){
         pausa = false;
         pausarPartida();
@@ -30,27 +36,31 @@ $(document).ready(function(){
         
         //Flecha derecha
         if(!pausa){
-            if(e.key == 'ArrowUp'){
+        
+            if(e.key == 'w'){
             
                 //Comprobamos que no se salga de los margenes de la derecha
-                if(jugador.style.top && parseInt(jugador.style.top ) >= 10){
-                    jugador.style.top = parseInt(jugador.style.top) - 20 ;
+                if(!movJugador){
+                    movJugador = setInterval(movimientoJugadorArriba,16);
                 }
-            }else if(e.key == 'ArrowDown'){
+                
+                
+            }else if(e.key == 's'){
                 
                 //Comprobamos que no se salga de los margenes de la izquierda
-                if(jugador.style.top && parseInt(jugador.style.top ) <= 500){
-                    jugador.style.top = parseInt(jugador.style.top) + 20 ;
+                if(!movJugador){
+                    movJugador = setInterval(movimientoJugadorAbajo,16);
                 }
+                
             }
-
+    
             //Controles jugador 2 
             if(segundoJugador == 'true'){
                 if(e.key == '8'){
             
                     //Comprobamos que no se salga de los margenes de la derecha
                     if(jugador2.style.top && parseInt(jugador2.style.top ) >= 10){
-                        jugador2.style.top = parseInt(jugador2.style.top) - 20 ;
+                        jugador2.style.top = (parseInt(jugador2.style.top) - 20) * 60 ;
                     }
                 }else if(e.key == '2'){
                     
@@ -61,6 +71,32 @@ $(document).ready(function(){
                 }
             }
         }
+        
+
+
+        
+    });
+
+    $(document.body).on('keyup',function(e){
+        
+
+        
+        
+        //Flecha derecha
+        if(e.key == 'w'){
+
+            if(movJugador){
+                clearInterval(movJugador);
+                movJugador = null;
+            }
+        }else if(e.key == 's'){
+
+            if(movJugador){
+                clearInterval(movJugador);
+                movJugador = null;
+            }
+        }
+        
 
 
         
@@ -76,6 +112,20 @@ $(document).ready(function(){
     
     
 });
+
+function movimientoJugadorArriba(){
+    let jugador = document.getElementById('jugador');
+    if(jugador.style.top && parseInt(jugador.style.top ) >= 10){
+        jugador.style.top = (parseInt(jugador.style.top) - 10 );
+    }
+}
+
+function movimientoJugadorAbajo(){
+    let jugador = document.getElementById('jugador');
+    if(jugador.style.top && parseInt(jugador.style.top ) <= 500){
+        jugador.style.top = parseInt(jugador.style.top) + 10 ;
+    }
+}
 
 /**
  * A partir de la configuración anterior, configura los valores de dificultad de la IA
@@ -114,14 +164,13 @@ function pausarPartida(){
     if(pausa){
         juegoDiv.style.opacity = 0.2;
         menuPausa.style.display = 'inline';
-        botonContinuar.removeAttribute('disabled');
-        botonVolver.removeAttribute('disabled');
+        botonContinuar.disabled = false;
+        botonVolver.disabled = false;
     }else{
         juegoDiv.style.opacity = 1;
         menuPausa.style.display = 'none';
-        menuPausa.style.opacity = 0;
-        botonContinuar.setAttribute('disabled');
-        botonVolver.setAttribute('disabled');
+        botonContinuar.disabled = true;
+        botonVolver.disabled = true;
     }
 }
 
