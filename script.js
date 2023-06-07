@@ -2,6 +2,7 @@ let posInicialPelota = [100,15];//X,Y
 let velocidadPelota = [5,5]; //X,Y
 let puntuaciones = [0,0];
 let pausa = false;
+let gameOver = false;
 let segundoJugador = false;
 let dificultadIA = 'normal';
 let movJugador = null;
@@ -30,9 +31,12 @@ $(document).ready(function(){
         let jugador = document.getElementById('jugador');
         let jugador2 = document.getElementById('ia');
 
-        if(e.key == 'Escape'){
-            pausa = pausa == true ? false : true;
-            pausarPartida();
+        //Si la partida sigue activa, se puede activar el modo pausa
+        if(!gameOver){
+            if(e.key == 'Escape'){
+                pausa = pausa == true ? false : true;
+                pausarPartida();
+            }
         }
         
         //Flecha derecha
@@ -237,7 +241,13 @@ function reiniciarJuego(){
     let random = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
 
     if(random == 0){
+        velocidadPelota[0] = 5;
+        velocidadPelota[1] = 5;
         velocidadPelota[0] *= (-1);
+
+    }else{
+        velocidadPelota[0] = 5;
+        velocidadPelota[1] = 5;
     }
 
     
@@ -520,12 +530,14 @@ function actualizarPuntuaciones(jugador,ia){
     let botonVolver = document.getElementById('volverFin');
 
     if(puntuaciones[0] == 5){
+        gameOver = true;
         texto.innerHTML = 'HAS GANADO LA PARTIDA';
         pausa = true;
         menuFinPartida.style.display= 'inline';
         juegoDiv.style.opacity = 0.2;
         botonVolver.removeAttribute('disabled');
     }else if(puntuaciones[1] == 5){
+        gameOver = true;
         texto.innerHTML = 'HAS PERDIDO LA PARTIDA';
         pausa = true;
         menuFinPartida.style.display= 'inline';
