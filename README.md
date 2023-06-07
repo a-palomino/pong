@@ -8,3 +8,7 @@ Para jugar utiliza los siguientes controles:
 
 -jugador2: -8 para mover arriba.
            -2 para mover abajo.
+           
+           
+<br>
+Puedes probar el juego aquí: https://a-palomino.github.io/pong/
