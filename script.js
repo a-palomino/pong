@@ -5,6 +5,7 @@ let pausa = false;
 let segundoJugador = false;
 let dificultadIA = 'normal';
 let movJugador = null;
+let movJugador2 = null;
 
 $(document).ready(function(){
     let jugador = document.getElementById('jugador');
@@ -59,14 +60,14 @@ $(document).ready(function(){
                 if(e.key == '8'){
             
                     //Comprobamos que no se salga de los margenes de la derecha
-                    if(jugador2.style.top && parseInt(jugador2.style.top ) >= 10){
-                        jugador2.style.top = (parseInt(jugador2.style.top) - 20) * 60 ;
+                    if(!movJugador2){
+                        movJugador2 = setInterval(movimientoJugador2Arriba,16);
                     }
                 }else if(e.key == '2'){
                     
                     //Comprobamos que no se salga de los margenes de la izquierda
-                    if(jugador2.style.top && parseInt(jugador2.style.top ) <= 500){
-                        jugador2.style.top = parseInt(jugador2.style.top) + 20 ;
+                    if(!movJugador2){
+                        movJugador2 = setInterval(movimientoJugador2Abajo,16);
                     }
                 }
             }
@@ -96,6 +97,23 @@ $(document).ready(function(){
                 movJugador = null;
             }
         }
+
+
+        if(segundoJugador == 'true'){
+            if(e.key == '8'){
+        
+                if(movJugador2){
+                    clearInterval(movJugador2);
+                    movJugador2 = null;
+                }
+            }else if(e.key == '2'){
+                
+                if(movJugador2){
+                    clearInterval(movJugador2);
+                    movJugador2 = null;
+                }
+            }
+        }
         
 
 
@@ -122,6 +140,20 @@ function movimientoJugadorArriba(){
 
 function movimientoJugadorAbajo(){
     let jugador = document.getElementById('jugador');
+    if(jugador.style.top && parseInt(jugador.style.top ) <= 500){
+        jugador.style.top = parseInt(jugador.style.top) + 10 ;
+    }
+}
+
+function movimientoJugador2Arriba(){
+    let jugador = document.getElementById('ia');
+    if(jugador.style.top && parseInt(jugador.style.top ) >= 10){
+        jugador.style.top = (parseInt(jugador.style.top) - 10 );
+    }
+}
+
+function movimientoJugador2Abajo(){
+    let jugador = document.getElementById('ia');
     if(jugador.style.top && parseInt(jugador.style.top ) <= 500){
         jugador.style.top = parseInt(jugador.style.top) + 10 ;
     }
