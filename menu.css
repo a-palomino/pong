@@ -6,6 +6,8 @@ body{
     width: 100%;
     min-width: 100%;
     background-image: linear-gradient(to bottom right, rgb(119, 0, 255), rgb(138, 7, 190));
+    -webkit-animation: AnimateBG 5s ease infinite;
+    animation: AnimateBG 5s ease infinite;
 }
 
 
@@ -73,3 +75,28 @@ li{
     color: rgb(255, 255, 255);
     
 }
+
+
+@-webkit-keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  @keyframes AnimateBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }

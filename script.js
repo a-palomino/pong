@@ -84,9 +84,6 @@ $(document).ready(function(){
 
     $(document.body).on('keyup',function(e){
         
-
-        
-        
         //Flecha derecha
         if(e.key == 'w'){
 
@@ -283,11 +280,11 @@ function margenErrorIA(){
     let random;
 
     switch(dificultadIA){
-        case 'facil': margenError = 7;
+        case 'facil': margenError = 5;
             
         break;
 
-        case 'normal': margenError = 5;
+        case 'normal': margenError = 4;
         break;
 
         case 'dificil' : margenError = 3;
@@ -412,7 +409,7 @@ function isCollidingIA(jugador){
     let widthPelotaObj = widthPelota(pelota);
 
     //Comprobamos si esta a la altura adecuada para detectar la colisión
-    if((pelotaPosX) >= 1270 && (pelotaPosX) <= 1280){
+    if((pelotaPosX) >= 1270 && (pelotaPosX) <= 1272){
         
         //Comparamos si la anchura de la pelota entra dentro del rango del jugador
         if(widthPelotaObj[0] >= widthJugador[0] && widthPelotaObj[0] <= widthJugador[1] ||
