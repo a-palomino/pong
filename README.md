@@ -11,4 +11,4 @@ Para jugar utiliza los siguientes controles:
            
            
 <br>
-Puedes probar el juego aquí: https://a-palomino.github.io/pong/
+You can try the game here: https://a-palomino.github.io/pong/
